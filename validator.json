@@ -1,0 +1,50 @@
+{
+  "schema_name": "TransactionDataSchema",
+  "fields": {
+    "Transaction_ID": {
+      "type": "string",
+      "pattern": "^[A-Z0-9]{8}$"
+    },
+    "customer_name": {
+      "type": "string",
+      "min_length": 2,
+      "max_length": 100,
+      "custom_validators": {
+        "not_empty": true
+      }
+    },
+    "amount": {
+      "type": "float",
+      "gt": 0
+    },
+    "currency": {
+      "type": "enum",
+      "values": [
+        "USD",
+        "EUR",
+        "GBP"
+      ]
+    },
+    "start_date": {
+      "type": "date"
+    },
+    "end_date": {
+      "type": "date"
+    },
+    "status": {
+      "type": "enum",
+      "values": [
+        "Completed",
+        "Pending",
+        "Processing"
+      ]
+    },
+    "item_count": {
+      "type": "integer",
+      "ge": 1
+    },
+    "customer_email": {
+      "type": "email"
+    }
+  }
+}

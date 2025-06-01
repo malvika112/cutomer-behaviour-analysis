@@ -1,0 +1,73 @@
+{
+    "schema_name": "CustomerDataCleaning",
+    "fields": [
+        {
+            "name": "Name",
+            "cleaners": [
+                {"type": "strip_whitespace", "params": {}},
+                {"type": "to_lowercase", "params": {}}
+            ]
+        },
+        {
+            "name": "Age",
+            "cleaners": [
+                {"type": "type_conversion", "params": {"target_type": "int"}}
+            ]
+        },
+        {
+            "name": "Income",
+            "cleaners": [
+                {"type": "remove_non_numeric", "params": {}},
+                {"type": "type_conversion", "params": {"target_type": "float"}}
+            ]
+        },
+        {
+            "name": "Email",
+            "cleaners": [
+                {"type": "to_lowercase", "params": {}}
+            ]
+        },
+        {
+            "name": "Ratings",
+            "cleaners": [
+                {"type": "type_conversion", "params": {"target_type": "float"}}
+            ]
+        },
+        {
+            "name": "TransactionID",
+            "cleaners": [
+                {"type": "strip_whitespace", "params": {}},
+                {"type": "type_conversion", "params": {"target_type": "str"}}
+            ]
+        }
+    ],
+    "model_cleaners": [
+        {
+            "type": "dynamic_fill_and_drop_na",
+            "fields": [],
+            "params": {
+                "exclude_numeric_impute_columns": [],
+                "mandatory_fields_for_drop": ["Name", "Email", "TransactionID"]
+            }
+        },
+        {
+            "type": "remove_inconsistent",
+            "fields": [],
+            "params": {}
+        },
+        {
+            "type": "drop_duplicates",
+            "fields": ["Name", "Email", "TransactionID"],
+            "params": {"keep": "first"}
+        },
+        {
+            "type": "treat_outliers",
+            "fields": [],
+            "params": {
+                "fields": ["Income", "Ratings"],
+                "percentile": 99,
+                "random_state": 42
+            }
+        }
+    ]
+}
